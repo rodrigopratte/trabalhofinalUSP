@@ -1,0 +1,4 @@
+"0","#| echo: false"
+"0","pinguins |>"
+"0","  count(especie, ilha) |>"
+"0","  DT::datatable()"

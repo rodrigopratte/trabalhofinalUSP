@@ -1,0 +1,5 @@
+"0","combinar_palavras <- function(vetor){"
+"0","  knitr::combine_words(vetor, "
+"0","                       and = "" e "", "
+"0","                       oxford_comma = FALSE)"
+"0","}"

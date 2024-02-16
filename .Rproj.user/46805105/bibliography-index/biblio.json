@@ -1,0 +1,48 @@
+{
+    "sources": [
+        {
+            "DOI": "10.5433/1679-0359.2013v34n5p2025",
+            "URL": "http://dx.doi.org/10.5433/1679-0359.2013v34n5p2025",
+            "author": [
+                {
+                    "family": "Bertossi",
+                    "given": "Ana Paula Almeida"
+                },
+                {
+                    "dropping-particle": "de",
+                    "family": "Menezes",
+                    "given": "João Paulo Cunha"
+                },
+                {
+                    "family": "Cecílio",
+                    "given": "Roberto Avelino"
+                },
+                {
+                    "family": "Garcia",
+                    "given": "Giovanni De Oliveira"
+                },
+                {
+                    "family": "Neves",
+                    "given": "Mirna Aparecida"
+                }
+            ],
+            "container-title": "Semina: Ciências Agrárias",
+            "id": "bertossi2013",
+            "issue": "5",
+            "issued": {
+                "date-parts": [
+                    [
+                        2013,
+                        10,
+                        17
+                    ]
+                ]
+            },
+            "page": "2025",
+            "title": "Seleção e agrupamento de indicadores da qualidade de águas utilizando estatística multivariada",
+            "type": "article-journal",
+            "volume": "34"
+        }
+    ],
+    "project_biblios": []
+}

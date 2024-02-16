@@ -1,0 +1,2 @@
+"0","#| message: false"
+"0","pinguins <- readr::read_csv(here(""~/relatorios-2024/dados/pinguins.csv""))"

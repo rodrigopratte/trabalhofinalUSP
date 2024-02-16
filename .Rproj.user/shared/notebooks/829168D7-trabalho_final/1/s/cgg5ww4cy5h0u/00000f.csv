@@ -1,0 +1,4 @@
+"0","#| include: false"
+"0","nomes_municipios <- unique(planilha_dados$Municipio) |>"
+"0","  knitr::combine_words(and = "" e "", "
+"0","                       oxford_comma = FALSE)"

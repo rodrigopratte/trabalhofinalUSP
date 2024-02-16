@@ -1,0 +1,3 @@
+"0","#| include: false"
+"0","library(readxl)"
+"0","planilha_dados <- read_excel(""dados/planilha_dados.xlsx"")"

@@ -1,0 +1,4 @@
+"0","#| message: false"
+"0","pinguins <- readr::read_csv(here(""dados"", ""pinguins.csv""))"
+"2","Erro: 'C:/Users/User/Documents/trabalho_final/dados/pinguins.csv' does not exist.
+"

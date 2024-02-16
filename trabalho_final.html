@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Rodrigo Pratte, Lagesa/UFES">
+
+<title>Trabalho Final - Relatórios reprodutíveis com R - USP</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="trabalho_final_files/libs/clipboard/clipboard.min.js"></script>
+<script src="trabalho_final_files/libs/quarto-html/quarto.js"></script>
+<script src="trabalho_final_files/libs/quarto-html/popper.min.js"></script>
+<script src="trabalho_final_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="trabalho_final_files/libs/quarto-html/anchor.min.js"></script>
+<link href="trabalho_final_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="trabalho_final_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="trabalho_final_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="trabalho_final_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="trabalho_final_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+<script src="trabalho_final_files/libs/core-js-2.5.3/shim.min.js"></script>
+<script src="trabalho_final_files/libs/react-18.2.0/react.min.js"></script>
+<script src="trabalho_final_files/libs/react-18.2.0/react-dom.min.js"></script>
+<script src="trabalho_final_files/libs/reactwidget-1.0.0/react-tools.js"></script>
+<script src="trabalho_final_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="trabalho_final_files/libs/reactable-0.4.4/reactable.css" rel="stylesheet">
+<script src="trabalho_final_files/libs/reactable-binding-0.4.4/reactable.js"></script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Trabalho Final - Relatórios reprodutíveis com R - USP</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Rodrigo Pratte, Lagesa/UFES </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introdução" class="level2">
+<h2 class="anchored" data-anchor-id="introdução">Introdução</h2>
+<p>O presente trabalho foi desenvolvido por Rodrigo Pratte Santos em 2024, como parte integrante do curso intitulado “Relatórios Reprodutíveis com R - EaD”, oferecido pela Universidade de São Paulo (USP) e ministrado pela professora Beatriz Milz. A análise se baseia em dados previamente coletados por Juliana Carneiro Botelho Corrêa em sua dissertação intitulada “Proposta metodológica de Indicadores de Participação Social nos processos de elaboração dos Planos Municipais de Saneamento Básico (PMSB) e Planos Municipais de Gestão Integrada de Resíduos Sólidos (PMGIRS) dos municípios do estado do Espírito Santo”, conduzida sob a orientação do professor Dr.&nbsp;Renato Ribeiro Siman em 2017.</p>
+</section>
+<section id="metodologia" class="level2">
+<h2 class="anchored" data-anchor-id="metodologia">Metodologia</h2>
+<p>Este documento apresenta o relatório da proposta metodológica de Indicadores de Participação Social nos processos de elaboração dos Planos Municipais de Saneamento Básico (PMSB) e Planos Municipais de Gestão Integrada de Resíduos Sólidos (PMGIRS) nos municípios do estado do Espírito Santo. O estudo abrange um total de <strong>29</strong> municípios, examinando <strong>36</strong> variáveis relevantes para esses processos.</p>
+<p>Os dados foram meticulosamente extraídos e analisados dos seguintes municípios: Afonso Claudio, Aguia Branca, Alegre, Alto Rio Novo, Baixo Guandu, Castelo, Colatina, Conceicao da Barra, Domingos Martins, Governador Lindemberg, Itaguacu, Itarana, Iuna, Jaguare, Laranja daTerra, Mantenopolis, Marataizes, Marilandia, Muniz Freire, Nova Venecia, Pancas, Pinheiros, Sao Domingos do Norte, Sao Gabriel da Palha, Sao Roque do Canaa, Sooretama, Venda Nova do Imigrante, Viana e Vila Valerio.</p>
+<p>O tamanho populacional desses municípios variou entre <strong>7888</strong> e <strong>121670</strong> habitantes, resultando em uma população total estudada de <strong>811934</strong> (conforme detalhado na <a href="#tabela-1">Tabela 1</a>).</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Tabela 1. Tamanho populacional dos municípios do Estado do Espírito Santo avaliados no presente estudo.</code></pre>
+</div>
+<div class="cell-output-display">
+
+<div id="tabela-1">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-a64f8f5b210624580a3b" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-a64f8f5b210624580a3b">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Municípios":["Afonso Claudio","Aguia Branca","Alegre","Alto Rio Novo","Baixo Guandu","Castelo","Colatina","Conceicao da Barra","Domingos Martins","Governador Lindemberg","Itaguacu","Itarana","Iuna","Jaguare","Laranja daTerra","Mantenopolis","Marataizes","Marilandia","Muniz Freire","Nova Venecia","Pancas","Pinheiros","Sao Domingos do Norte","Sao Gabriel da Palha","Sao Roque do Canaa","Sooretama","Venda Nova do Imigrante","Viana","Vila Valerio"],"População":[35502,10055,30768,7888,31298,38070,121670,31353,34589,12120,14836,11319,29743,29150,11428,14966,38301,12224,18826,50647,12224,26863,8652,35785,12283,27966,23774,64999,14635]},"columns":[{"id":"Municípios","name":"Municípios","type":"character"},{"id":"População","name":"População","type":"numeric"}],"searchable":true,"dataKey":"5962905bf8ce503c78383b579dcc8f78"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="mapaES.jpg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Mapa: Estado do Espírito Santo com os municípios objeto do presente estudo.</figcaption>
+</figure>
+</div>
+</section>
+<section id="resultados" class="level2">
+<h2 class="anchored" data-anchor-id="resultados">Resultados</h2>
+<p>Foram conduzidas análises detalhadas de correlação, acompanhadas de gráficos de dispersão, seguidas da aplicação de modelos de regressão linear para avaliar minuciosamente a natureza e a robustez das relações entre as variáveis investigadas. Os resultados revelaram correlações significativas entre as variáveis, indicando a presença de fatores compartilhados <span class="citation" data-cites="bertossi2013">(<a href="#ref-bertossi2013" role="doc-biblioref">Bertossi et al. 2013</a>)</span>. Este achado é particularmente importante, pois oferece insights valiosos sobre a interdependência das variáveis em estudo. Notavelmente, os gráficos de dispersão apresentam uma clara tendência de correlação positiva, evidenciando visualmente a direção e a intensidade dessas associações cruciais.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>planilha_dados <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> IR1_AP, <span class="at">y =</span> IEC_AP)) <span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> F) <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="trabalho_final_files/figure-html/fig1-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figura 1: Gráfico de dispersão da correlação entre IEC e IR1 para fase de Audiência Pública.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Para confirmar a possível relação linear da figura 1, aplicamos o modelo lm(regressão linear model) para as variáveis (IR1_AP e IEC_AP) onde a variável regressora é IR1_AP, e a preditiva é IEC_AP.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(planilha_dados<span class="sc">$</span>IEC_AP <span class="sc">~</span> planilha_dados<span class="sc">$</span>IR1_AP)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = planilha_dados$IEC_AP ~ planilha_dados$IR1_AP)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.23307 -0.11932 -0.08317  0.08975  0.45211 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)            0.21456    0.05658   3.792 0.001772 ** 
+planilha_dados$IR1_AP  1.09523    0.26165   4.186 0.000795 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1978 on 15 degrees of freedom
+  (12 observations deleted due to missingness)
+Multiple R-squared:  0.5388,    Adjusted R-squared:  0.508 
+F-statistic: 17.52 on 1 and 15 DF,  p-value: 0.0007953</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>planilha_dados <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> IR2_AP, <span class="at">y =</span> IEC_AP)) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> F) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="trabalho_final_files/figure-html/fig2-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figura 2: Gráfico de dispersão da correlação entre IEC e IR2 para fase de Audiência Pública.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Para confirmar a possível relação linear da figura 2, aplicamos o modelo lm(regressão linear model) para as variáveis (IR2_AP e IEC_AP) onde a variável regressora é IR2_AP, e a preditiva é IEC_AP.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(planilha_dados<span class="sc">$</span>IEC_AP <span class="sc">~</span> planilha_dados<span class="sc">$</span>IR2_AP)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = planilha_dados$IEC_AP ~ planilha_dados$IR2_AP)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.4192 -0.1691 -0.0178  0.2143  0.3349 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)            0.03183    0.11314   0.281  0.78230   
+planilha_dados$IR2_AP  0.64942    0.20822   3.119  0.00704 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.2268 on 15 degrees of freedom
+  (12 observations deleted due to missingness)
+Multiple R-squared:  0.3934,    Adjusted R-squared:  0.3529 
+F-statistic: 9.728 on 1 and 15 DF,  p-value: 0.00704</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>planilha_dados <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> IAT_AP, <span class="at">y =</span> IEC_AP)) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> F) <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="trabalho_final_files/figure-html/fig3-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figura 3: Gráfico de dispersão da correlação entre IEC e IAT para fase de Audiência Pública.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Para confirmar a possível relação linear da figura 3, aplicamos o modelo lm(regressão linear model) para as variáveis (IAT_AP e IEC_AP) onde a variável regressora é IAT_AP, e a preditiva é IEC_AP.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(planilha_dados<span class="sc">$</span>IEC_AP <span class="sc">~</span> planilha_dados<span class="sc">$</span>IAT_AP)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = planilha_dados$IEC_AP ~ planilha_dados$IAT_AP)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.35377 -0.16547 -0.03196  0.15785  0.50451 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)            0.05012    0.13617   0.368   0.7179  
+planilha_dados$IAT_AP  0.40042    0.16860   2.375   0.0313 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.2482 on 15 degrees of freedom
+  (12 observations deleted due to missingness)
+Multiple R-squared:  0.2733,    Adjusted R-squared:  0.2248 
+F-statistic:  5.64 on 1 and 15 DF,  p-value: 0.03132</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>planilha_dados <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> IMR_D, <span class="at">y =</span> ICC_D)) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> F) <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="trabalho_final_files/figure-html/fig4-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figura 4: Gráfico de dispersão da correlação entre ICC e IMR para fase de Diagnóstico Participativo.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Para confirmar a possível relação linear da figura 4, aplicamos o modelo lm(regressão linear model) para as variáveis (IMR_D e ICC_D) onde a variável regressora é IMR_D, e a preditiva é ICC_D.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(planilha_dados<span class="sc">$</span>ICC_D <span class="sc">~</span> planilha_dados<span class="sc">$</span>IMR_D)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = planilha_dados$ICC_D ~ planilha_dados$IMR_D)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.105038 -0.030232 -0.005744  0.021949  0.109355 
+
+Coefficients:
+                     Estimate Std. Error t value            Pr(&gt;|t|)    
+(Intercept)           0.03330    0.02686    1.24               0.226    
+planilha_dados$IMR_D  0.93913    0.05149   18.24 &lt;0.0000000000000002 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.0475 on 27 degrees of freedom
+Multiple R-squared:  0.9249,    Adjusted R-squared:  0.9222 
+F-statistic: 332.7 on 1 and 27 DF,  p-value: &lt; 0.00000000000000022</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>planilha_dados <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> IMR_PPA, <span class="at">y =</span> ICC_PPA)) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> F) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="trabalho_final_files/figure-html/fig5-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figura 5: Gráfico de dispersão da correlação entre ICC e IMR para fase de Planos, Projetos e Ações.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Para confirmar a possível relação linear da figura 5, aplicamos o modelo lm(regressão linear model) para as variáveis (IMR_PPA e ICC_PPA) onde a variável regressora é IMR_PPA, e a preditiva é ICC_PPA.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>model5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(planilha_dados<span class="sc">$</span>IMR_PPA <span class="sc">~</span> planilha_dados<span class="sc">$</span>ICC_PPA)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = planilha_dados$IMR_PPA ~ planilha_dados$ICC_PPA)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.33355 -0.04338 -0.01936  0.03965  0.49665 
+
+Coefficients:
+                       Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)              0.1495     0.1678   0.891   0.3860  
+planilha_dados$ICC_PPA   0.5773     0.2753   2.097   0.0522 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1621 on 16 degrees of freedom
+  (11 observations deleted due to missingness)
+Multiple R-squared:  0.2156,    Adjusted R-squared:  0.1666 
+F-statistic: 4.398 on 1 and 16 DF,  p-value: 0.05222</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>planilha_dados <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> IMR_AP, <span class="at">y =</span> ICC_AP)) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> F) <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="trabalho_final_files/figure-html/fig6-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figura 6: Gráfico de dispersão da correlação entre ICC e IMR para fase de Audiências Públicas.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Para confirmar a possível relação linear da figura 6, aplicamos o modelo lm(regressão linear model) para as variáveis (IMR_PPA e ICC_PPA) onde a variável regressora é IMR_AP, e a preditiva é ICC_AP.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>model6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(planilha_dados<span class="sc">$</span>IMR_AP <span class="sc">~</span> planilha_dados<span class="sc">$</span>ICC_AP)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = planilha_dados$IMR_AP ~ planilha_dados$ICC_AP)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.14834 -0.01916  0.01269  0.02019  0.13193 
+
+Coefficients:
+                      Estimate Std. Error t value         Pr(&gt;|t|)    
+(Intercept)           -0.01088    0.03531  -0.308            0.762    
+planilha_dados$ICC_AP  0.98882    0.05269  18.765 0.00000000000793 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.06242 on 15 degrees of freedom
+  (12 observations deleted due to missingness)
+Multiple R-squared:  0.9591,    Adjusted R-squared:  0.9564 
+F-statistic: 352.1 on 1 and 15 DF,  p-value: 0.000000000007927</code></pre>
+</div>
+</div>
+<p>Ao analisar o gráfico abaixo (Figura 7), verificou-se uma diferença estatisticamente significativa no Indicador de Eficácia da Comunicação (IEC) quando avaliado em três contextos distintos: Audiência Pública (AP), Planos, Projetos e Ações (PPA), e Diagnóstico Participativo (DP), conforme demonstrado pelo teste de ANOVA (p=0.000351). Uma análise mais aprofundada revelou que os níveis de IEC em AP e PPA divergiram significativamente daqueles observados em DP (p=0.0079288 e p=0.0007661, respectivamente). No entanto, não foi identificada uma diferença estatisticamente significativa entre AP e PPA (p=0.7409426), conforme constatado pelo teste de Tukey. Esses achados destacam nuances distintas na eficácia da comunicação em diferentes estágios dos processos de participação pública, fornecendo insights valiosos para aprimorar estratégias de engajamento comunitário e tomada de decisões participativas.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Data1<span class="ot">&lt;-</span>planilha_dados<span class="sc">$</span>IEC_D</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>Data2<span class="ot">&lt;-</span>planilha_dados<span class="sc">$</span>IEC_AP</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>Data3<span class="ot">&lt;-</span>planilha_dados<span class="sc">$</span>IEC_PPA</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>Data<span class="ot">&lt;-</span><span class="fu">c</span>(Data1,Data2,Data3)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>clasedata<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'IEC_D'</span>,<span class="dv">29</span>),<span class="fu">rep</span>(<span class="st">'IEC_PPA'</span>,<span class="dv">29</span>),<span class="fu">rep</span>(<span class="st">"IEC_AP"</span>,<span class="dv">29</span>))</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>base<span class="ot">&lt;-</span><span class="fu">cbind.data.frame</span>(Data,clasedata)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(base,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> clasedata,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> Data))<span class="sc">+</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="trabalho_final_files/figure-html/fig7-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figura 7: Boxplot do comportamento do IEC na fase de Diagnóstico Participativo.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>anova_result <span class="ot">&lt;-</span> <span class="fu">aov</span>(Data <span class="sc">~</span> clasedata, <span class="at">data =</span> base)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anova_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+clasedata    2  0.567  0.2835   9.087 0.000351 ***
+Residuals   61  1.903  0.0312                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+23 observations deleted due to missingness</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>tukey_result <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(anova_result)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tukey_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = Data ~ clasedata, data = base)
+
+$clasedata
+                      diff         lwr         upr     p adj
+IEC_D-IEC_AP   -0.16475701 -0.29208359 -0.03743043 0.0079288
+IEC_PPA-IEC_AP  0.04418988 -0.09931897  0.18769874 0.7409426
+IEC_PPA-IEC_D   0.20894689  0.07933023  0.33856356 0.0007661</code></pre>
+</div>
+</div>
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-bertossi2013" class="csl-entry" role="listitem">
+Bertossi, Ana Paula Almeida, João Paulo Cunha de Menezes, Roberto Avelino Cecílio, Giovanni De Oliveira Garcia, and Mirna Aparecida Neves. 2013. <span>“Seleção e Agrupamento de Indicadores Da Qualidade de Águas Utilizando Estatística Multivariada.”</span> <em>Semina: Ciências Agrárias</em> 34 (5): 2025. <a href="https://doi.org/10.5433/1679-0359.2013v34n5p2025">https://doi.org/10.5433/1679-0359.2013v34n5p2025</a>.
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

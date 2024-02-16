@@ -1,0 +1,4 @@
+"0","#| include: false"
+"0","# criar um objeto para o código abaixo não ficar muito poluído. Depois chamar o objeto dentro do `r` do código-linha."
+"0","ilhas_pinguins <- unique(pinguins$ilha) |>"
+"0","  combinar_palavras()"

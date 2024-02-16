@@ -1,0 +1,234 @@
+---
+title: "Trabalho Final - Relatórios reprodutíveis com R - USP"
+author: "Rodrigo Pratte, Lagesa/UFES"
+format: html 
+editor: visual
+bibliography: references.bib
+---
+
+## Introdução
+
+O presente trabalho foi desenvolvido por Rodrigo Pratte Santos em 2024, como parte integrante do curso intitulado "Relatórios Reprodutíveis com R - EaD", oferecido pela Universidade de São Paulo (USP) e ministrado pela professora Beatriz Milz. A análise se baseia em dados previamente coletados por Juliana Carneiro Botelho Corrêa em sua dissertação intitulada "Proposta metodológica de Indicadores de Participação Social nos processos de elaboração dos Planos Municipais de Saneamento Básico (PMSB) e Planos Municipais de Gestão Integrada de Resíduos Sólidos (PMGIRS) dos municípios do estado do Espírito Santo", conduzida sob a orientação do professor Dr. Renato Ribeiro Siman em 2017.
+
+## Metodologia
+
+```{r}
+#| label: pacote
+#| include: false
+#| warning: false
+library(tidyverse)
+library(here)
+```
+
+```{r}
+#| include: false
+library(readxl)
+planilha_dados <- read_excel("dados/planilha_dados.xlsx")
+```
+
+```{r}
+#| include: false
+here("dados, planilha_dados.xlsx")
+```
+
+```{r}
+#| include: false
+nomes_municipios <- unique(planilha_dados$Municipio) |>
+  knitr::combine_words(and = " e ", 
+                       oxford_comma = FALSE)
+```
+
+```{r}
+#| include: false
+options(scipen = 999)
+resultado_notacao_cientifica <- max(planilha_dados$Populacao)
+print(resultado_notacao_cientifica)
+```
+
+Este documento apresenta o relatório da proposta metodológica de Indicadores de Participação Social nos processos de elaboração dos Planos Municipais de Saneamento Básico (PMSB) e Planos Municipais de Gestão Integrada de Resíduos Sólidos (PMGIRS) nos municípios do estado do Espírito Santo. O estudo abrange um total de **`r nrow(planilha_dados)`** municípios, examinando **`r ncol(planilha_dados)`** variáveis relevantes para esses processos.
+
+Os dados foram meticulosamente extraídos e analisados dos seguintes municípios:  `r (nomes_municipios)`.
+
+O tamanho populacional desses municípios variou entre **`r min(planilha_dados$Populacao)`** e **`r max(planilha_dados$Populacao)`** habitantes, resultando em uma população total estudada de **`r sum(planilha_dados$Populacao)`** (conforme detalhado na [Tabela 1](#tabela-1)).
+
+
+```{r, echo=FALSE}
+#| label: tab1
+
+# Dados
+municipios <- c(planilha_dados$Municipio)
+populacao <- c(planilha_dados$Populacao)
+
+# Criando o data frame
+dados <- data.frame(Municípios = municipios, População = populacao)
+
+# Tabela
+cat("Tabela 1. Tamanho populacional dos municípios do Estado do Espírito Santo avaliados no presente estudo.\n")
+htmltools::tagList(
+  htmltools::div(
+    reactable::reactable(
+      dados,
+      searchable = TRUE
+    ),
+    id = "tabela-1"
+  )
+)
+```
+
+![Mapa: Estado do Espírito Santo com os municípios objeto do presente estudo.](mapaES.jpg){fig-align="center"}
+
+## Resultados
+
+Foram conduzidas análises detalhadas de correlação, acompanhadas de gráficos de dispersão, seguidas da aplicação de modelos de regressão linear para avaliar minuciosamente a natureza e a robustez das relações entre as variáveis investigadas. Os resultados revelaram correlações significativas entre as variáveis, indicando a presença de fatores compartilhados [@bertossi2013]. Este achado é particularmente importante, pois oferece insights valiosos sobre a interdependência das variáveis em estudo. Notavelmente, os gráficos de dispersão apresentam uma clara tendência de correlação positiva, evidenciando visualmente a direção e a intensidade dessas associações cruciais.
+
+```{r}
+#| include: false
+library(ggplot2)
+```
+
+```{r}
+#| label: fig1
+#| warning: false
+#| fig-cap: "Figura 1: Gráfico de dispersão da correlação entre IEC e IR1 para fase de Audiência Pública."
+#| fig-align: "center"
+planilha_dados |> 
+  ggplot(aes(x = IR1_AP, y = IEC_AP)) +
+  geom_point() + 
+   geom_smooth(method = lm,
+              se = F) +
+  theme_light()
+```
+
+Para confirmar a possível relação linear da figura 1, aplicamos o modelo lm(regressão linear model) para as variáveis (IR1_AP e IEC_AP) onde a variável regressora é IR1_AP, e a preditiva é IEC_AP.
+
+```{r}
+model1 <- lm(planilha_dados$IEC_AP ~ planilha_dados$IR1_AP)
+summary(model1)
+```
+
+```{r}
+#| label: fig2
+#| warning: false
+#| fig-cap: "Figura 2: Gráfico de dispersão da correlação entre IEC e IR2 para fase de Audiência Pública."
+#| fig-align: "center"
+planilha_dados |> 
+  ggplot(aes(x = IR2_AP, y = IEC_AP)) +
+  geom_point() + 
+   geom_smooth(method = lm,
+              se = F) +
+  theme_light()
+```
+
+Para confirmar a possível relação linear da figura 2, aplicamos o modelo lm(regressão linear model) para as variáveis (IR2_AP e IEC_AP) onde a variável regressora é IR2_AP, e a preditiva é IEC_AP.
+
+```{r}
+model2 <- lm(planilha_dados$IEC_AP ~ planilha_dados$IR2_AP)
+summary(model2)
+```
+
+```{r}
+#| label: fig3
+#| warning: false
+#| fig-cap: "Figura 3: Gráfico de dispersão da correlação entre IEC e IAT para fase de Audiência Pública."
+#| fig-align: "center"
+planilha_dados |> 
+  ggplot(aes(x = IAT_AP, y = IEC_AP)) +
+  geom_point() + 
+   geom_smooth(method = lm,
+              se = F) +
+  theme_light()
+```
+
+Para confirmar a possível relação linear da figura 3, aplicamos o modelo lm(regressão linear model) para as variáveis (IAT_AP e IEC_AP) onde a variável regressora é IAT_AP, e a preditiva é IEC_AP.
+
+```{r}
+model3 <- lm(planilha_dados$IEC_AP ~ planilha_dados$IAT_AP)
+summary(model3)
+```
+
+```{r}
+#| label: fig4
+#| warning: false
+#| fig-cap: "Figura 4: Gráfico de dispersão da correlação entre ICC e IMR para fase de Diagnóstico Participativo."
+#| fig-align: "center"
+planilha_dados |> 
+  ggplot(aes(x = IMR_D, y = ICC_D)) +
+  geom_point() + 
+   geom_smooth(method = lm,
+              se = F) +
+  theme_light()
+```
+
+Para confirmar a possível relação linear da figura 4, aplicamos o modelo lm(regressão linear model) para as variáveis (IMR_D e ICC_D) onde a variável regressora é IMR_D, e a preditiva é ICC_D.
+
+```{r}
+model4 <- lm(planilha_dados$ICC_D ~ planilha_dados$IMR_D)
+summary(model4)
+```
+
+```{r}
+#| label: fig5
+#| warning: false
+#| fig-cap: "Figura 5: Gráfico de dispersão da correlação entre ICC e IMR para fase de Planos, Projetos e Ações."
+#| fig-align: "center"
+planilha_dados |> 
+  ggplot(aes(x = IMR_PPA, y = ICC_PPA)) +
+  geom_point() + 
+  geom_smooth(method = lm,
+              se = F) +
+  theme_light()
+```
+
+Para confirmar a possível relação linear da figura 5, aplicamos o modelo lm(regressão linear model) para as variáveis (IMR_PPA e ICC_PPA) onde a variável regressora é IMR_PPA, e a preditiva é ICC_PPA.
+
+```{r}
+model5 <- lm(planilha_dados$IMR_PPA ~ planilha_dados$ICC_PPA)
+summary(model5)
+```
+
+```{r}
+#| label: fig6
+#| warning: false
+#| fig-cap: "Figura 6: Gráfico de dispersão da correlação entre ICC e IMR para fase de Audiências Públicas."
+#| fig-align: "center"
+planilha_dados |> 
+  ggplot(aes(x = IMR_AP, y = ICC_AP)) +
+  geom_point() + 
+   geom_smooth(method = lm,
+              se = F) +
+  theme_light()
+```
+
+Para confirmar a possível relação linear da figura 6, aplicamos o modelo lm(regressão linear model) para as variáveis (IMR_PPA e ICC_PPA) onde a variável regressora é IMR_AP, e a preditiva é ICC_AP.
+
+```{r}
+model6 <- lm(planilha_dados$IMR_AP ~ planilha_dados$ICC_AP)
+summary(model6)
+```
+
+Ao analisar o gráfico abaixo (Figura 7), verificou-se uma diferença estatisticamente significativa no Indicador de Eficácia da Comunicação (IEC) quando avaliado em três contextos distintos: Audiência Pública (AP), Planos, Projetos e Ações (PPA), e Diagnóstico Participativo (DP), conforme demonstrado pelo teste de ANOVA (p=0.000351). Uma análise mais aprofundada revelou que os níveis de IEC em AP e PPA divergiram significativamente daqueles observados em DP (p=0.0079288 e p=0.0007661, respectivamente). No entanto, não foi identificada uma diferença estatisticamente significativa entre AP e PPA (p=0.7409426), conforme constatado pelo teste de Tukey. Esses achados destacam nuances distintas na eficácia da comunicação em diferentes estágios dos processos de participação pública, fornecendo insights valiosos para aprimorar estratégias de engajamento comunitário e tomada de decisões participativas.
+
+```{r}
+#| label: fig7
+#| warning: false
+#| fig-cap: "Figura 7: Boxplot do comportamento do IEC na fase de Diagnóstico Participativo."
+#| fig-align: "center"
+#| out-width: "80%"
+Data1<-planilha_dados$IEC_D
+Data2<-planilha_dados$IEC_AP
+Data3<-planilha_dados$IEC_PPA
+Data<-c(Data1,Data2,Data3)
+clasedata<-c(rep('IEC_D',29),rep('IEC_PPA',29),rep("IEC_AP",29))
+base<-cbind.data.frame(Data,clasedata)
+ggplot(base,
+       aes(x = clasedata,
+           y = Data))+
+  geom_boxplot()
+```
+
+```{r}
+anova_result <- aov(Data ~ clasedata, data = base)
+summary(anova_result)
+tukey_result <- TukeyHSD(anova_result)
+print(tukey_result)
+```

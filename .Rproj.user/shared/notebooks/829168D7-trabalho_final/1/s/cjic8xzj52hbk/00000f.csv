@@ -1,0 +1,8 @@
+"0","#| include: false"
+"0","options(scipen = 999)"
+"0","resultado_notacao_cientifica <- max(planilha_dados$Populacao)"
+"0","print(resultado_notacao_cientifica)"
+"1","[1]"
+"1"," 121670"
+"1","
+"

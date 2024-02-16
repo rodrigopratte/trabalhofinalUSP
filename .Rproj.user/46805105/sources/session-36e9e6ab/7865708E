@@ -1,0 +1,31 @@
+{
+    "id": "7865708E",
+    "path": "~/trabalho_final/trabalho_final.qmd",
+    "project_path": "trabalho_final.qmd",
+    "type": "quarto_markdown",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1707412036918.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "rmdVisualMode": "false",
+        "rmdVisualWrapConfigured": "true",
+        "source_window_id": "",
+        "Source": "Source",
+        "rmdVisualCollapsedChunks": "",
+        "rmdVisualModeLocation": "2109:917",
+        "docOutlineVisible": "0",
+        "cursorPosition": "43,43",
+        "scrollLine": "26"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1708022834,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1708022834825,
+    "read_only": false,
+    "read_only_alternatives": []
+}

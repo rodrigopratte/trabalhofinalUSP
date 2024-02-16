@@ -1,0 +1,5 @@
+"0","#| echo: false"
+"0","pinguins |>"
+"0","  count(especie, ilha) |>"
+"0","  flextable::flextable() |>"
+"0","  flextable::autofit()"
